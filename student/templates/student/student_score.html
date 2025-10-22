@@ -1,0 +1,12 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>students page </h1>
+        <ul>
+       {% for s in student_score %}
+        <li>{{s.fullname}}:{{s.score}}</li>
+       {% endfor %}
+        </ul>
+    </body>
+</html> 

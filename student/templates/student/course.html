@@ -1,0 +1,15 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>courses page </h1>
+        <ul>
+       {% for i in all%}
+        <li>{{i.title}} : {{i.code}}</li>
+        {% for student in i.students.all %}
+        <p>{{student.fullname}}</p>
+        {% endfor %}
+       {% endfor %}
+        </ul>
+    </body>
+</html> 

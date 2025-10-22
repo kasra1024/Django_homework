@@ -1,0 +1,39 @@
+<!-- <html>
+    <head>
+    </head>
+    <body>
+        <h1>students page </h1>
+         <p>{{cors_st.title}} </p>
+         <p>{{cors_st.code}}</p>
+         <p>{{cors_st.decription}}</p>
+           <ul>
+            {% for student in cors_st.students.all%}
+            <li>{{student.fullname}} : {{ student.score }}</li>
+          {% endfor %}
+        </ul>
+    </body>
+</html> 
+
+ -->
+
+
+
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>students page </h1>
+         {% for i in cors_st %}
+         <p>{{ i.tilte }}</p>
+         <p>{{ i.description }}</p>
+         <p> {{ i.code }}</p>
+           <ul>
+            {% for student in i.students.all%}
+            <li>{{student.fullname}} : {{ student.score }}</li>
+            {% endfor %}
+          
+        {% endfor %}
+          
+        </ul>
+    </body>
+</html> 

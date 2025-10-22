@@ -1,0 +1,22 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>student</h1>
+        
+         {% for i in students %}
+            <p>{{ i.fullname}} : {{i.score}}</p>  
+
+            {% for course in i.Course.all %}
+             <p>{{course.title}}</p>
+            {% endfor %}
+            
+            {% for task in i.task.all %}
+            <p>{{task.title}}</p>
+            {% endfor %}
+        {% endfor %}
+        
+    </body>
+
+
+</html>

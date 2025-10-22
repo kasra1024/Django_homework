@@ -1,0 +1,15 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>students page </h1>
+        <ul>
+       {% for s in students%}
+        <li>{{s.fullname}}</li>
+        {% for student in s.Course.all %}
+        <li>{{ student.title }}</li>
+        {% endfor %}
+       {% endfor %}
+        </ul>
+    </body>
+</html> 
