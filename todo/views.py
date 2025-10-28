@@ -50,6 +50,19 @@ def home4 (request) :
 # ---------------------------------------------------------------------
 def task_student (request , st_id) : 
     student_obj = Student.objects.get(id=st_id)
+    
+
+
+    if student_obj.fullname == "ali" : 
+        student_obj.fullname = "ksara" 
+    elif student_obj.fullname == "ali" :
+        student_obj.fullname = 'kasra'
+    student_obj.save()
+
+
+
+
+
     task.objects.create(
         title = "new_task" , 
         done = False , 

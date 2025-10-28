@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'todo',
     'student',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -122,3 +123,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# MEDIA_ROOT = "C:/Users/DELL/Desktop/kasra_Django/media/"
+
+
+MEDIA_ROOT = f"{BASE_DIR}/media/"
+
+MEDIA_URL = "/media/"

@@ -1,12 +1,14 @@
 <html>
     <head>
     </head>
-    <body>
+    <body> 
         <h1>student</h1>
         
          {% for i in students %}
-            <p>{{ i.fullname}} : {{i.score}}</p>  
-
+         {% if i.img %}
+            <p>{{ i.fullname}} : {{i.score}} {{i.img.path}}</p>
+            <img src={{i.img.url}} >
+            
             {% for course in i.Course.all %}
              <p>{{course.title}}</p>
             {% endfor %}
@@ -14,8 +16,21 @@
             {% for task in i.task.all %}
             <p>{{task.title}}</p>
             {% endfor %}
+            {% endif %}
         {% endfor %}
         
+
+        <form action={% url "student:student_list_new" %} method="POST">
+            {% csrf_token %}
+            {{form}} 
+            <input type="submit" value="submit">
+        </form>
+
+
+
+
+
+
     </body>
 
 

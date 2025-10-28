@@ -1,10 +1,14 @@
-from django.shortcuts import render , get_object_or_404
+from django.shortcuts import render , redirect
 
 from student.models import Student
 
 from student.models import Course
 
 from todo.models import task
+
+from student.forms import StudentForm
+
+
 
 
 def student_view(request) : 
@@ -32,10 +36,32 @@ def student_view2 (request) :
     return render (request , "student/course.html" , context)
 # -----------------------------------------------------------------------
 
+ 
+
+
+
 def student_view3 (request) : 
-    all_student = Student.objects.all()
-    context = {"students" : all_student} 
-    return render (request , "student/all_student.html" , context )
+    form = StudentForm() 
+    if request.method == "GET" : 
+        all_student = Student.objects.all()
+        context = {"students" : all_student , "form" : form} 
+        return render (request , "student/all_student.html" , context )
+    elif request.method == "POST" : 
+        d = StudentForm(request.POST)
+        if d.is_valid():
+            save_obj = d.save()
+        # data = request.POST
+        # fullname1 = data["fullname"]
+        # username1 = data["username"]
+        # phone1 = data["phone_number"]
+        # student_obj = Student.objects.create(fullname="fullname1" , username="username1" , phone_number=phone1 , score=0)
+            if save_obj :
+                return redirect("todo:home")
+        return render (request ,"student/all_student.html" , {"form" : form})
+
+
+
+
   
 
 # -------------------------------------------------------------------------------------------------------
@@ -90,6 +116,6 @@ def student_courses (request , stu_id) :
 def change_task (request , task_id) : 
     task_obj = task.objects.get(id = task_id)
     task.done = not task.done
-    task.save() 
+    task.save()  
     context = {"Task" : task_obj}
     return render (request , 'student/change_task.html' ,context )
