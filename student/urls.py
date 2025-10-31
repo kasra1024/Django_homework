@@ -16,3 +16,4 @@ urlpatterns = [
     path ("all_student_new/" , AllStudentView.as_view(), name= "student_list_new") 
 ]
   
+   

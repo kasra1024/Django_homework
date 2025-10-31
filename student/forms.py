@@ -6,3 +6,7 @@ class StudentForm(ModelForm) :
         model = Student
         fields = ["fullname" , "username" , "phone_number"]
 
+
+ 
+
+

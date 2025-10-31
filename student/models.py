@@ -29,3 +29,4 @@ class profile (models.Model) :
     student = models.OneToOneField(Student , related_name= "profile" , on_delete= models.CASCADE)
     def __str__(self):
         return self.bio
+ 
