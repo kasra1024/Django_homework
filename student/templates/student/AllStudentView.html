@@ -1,0 +1,15 @@
+<html>
+    <head>
+        <h1>لیست تمام دانشجویان</h1>
+    </head>
+    <body>
+        <ul>
+            {% for i in student %}
+            <li>
+                {{ i.fullname }}
+            </li>
+            {% endfor %}
+        </ul>
+        
+    </body>
+</html>

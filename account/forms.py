@@ -5,4 +5,9 @@ class UserRegiseterForm (ModelForm) :
 
     class Meta : 
         model = User
-        fields = ["first_name" , "username" , "password"]
+        fields = ["first_name", "username" , "password"]
+
+class UserLoginForm (ModelForm): 
+    class Meta : 
+        model = User
+        fields = ['username' , 'password']

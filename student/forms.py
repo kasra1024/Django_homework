@@ -1,12 +1,18 @@
 from django.forms import ModelForm 
-from student.models import Student
+from student.models import Student , Course , Teacher
 
 class StudentForm(ModelForm) :
     class Meta : 
         model = Student
-        fields = ["fullname" , "username" , "phone_number"]
+        fields = ["fullname"]
 
 
  
+
+
+class CourseStudentForm (ModelForm) : 
+    class Meta : 
+        model = Course
+        fields = ['title' , 'code' , 'decription' , 'start_date' , 'end_date']
 
 

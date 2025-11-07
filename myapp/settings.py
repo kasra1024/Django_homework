@@ -132,3 +132,4 @@ MEDIA_ROOT = f"{BASE_DIR}/media/"
 
 MEDIA_URL = "/media/"
 
+LOGIN_URL = "account/user_login/"

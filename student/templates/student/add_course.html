@@ -28,7 +28,7 @@
           <a class="nav-link" href="/todo/">works</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/account/user-register/">gon </a>
+          <a class="nav-link" href="/account/user-register/">come on </a>
         </li>
       </ul>
     </div>
@@ -37,13 +37,20 @@
         </h3>
     </head>
     <body>
+        
+      
         <p>
             {{message}}
         </p>
-         <form action ={% url "account:user_register" %} method="post">
+         <form action ={% url "student:student_list" %} method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="ساخت حساب" />
+            <input type="submit" value = "ثبت درس" />
     </form>
+
+    <a class="btn" href={% url "account:user_logout" %}>خروج از حساب </a>
+    <a class = "btn" href={% url "account:user_delete" %}>پاک کردن حساب </a>
+
+
     </body>
 </html>

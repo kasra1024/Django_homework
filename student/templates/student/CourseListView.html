@@ -1,0 +1,11 @@
+<h1>لیست دوره‌ها</h1>
+<ul>
+  {% for c in courses %}
+    <li>
+      <a href="{% url 'student:course_detail' c.pk %}">{{ c.title }}</a>
+      — مدرس: {{ c.teacher.fullname if c.teacher else "بدون مدرس" }}
+    </li>
+  {% empty %}
+    <li>هیچ دوره‌‌ای یافت نشد.</li>
+  {% endfor %}
+</ul>

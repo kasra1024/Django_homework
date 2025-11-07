@@ -28,7 +28,7 @@
           <a class="nav-link" href="/todo/">works</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/account/user-register/">gon </a>
+          <a class="nav-link" href="/account/user-register/">come on </a>
         </li>
       </ul>
     </div>
@@ -40,10 +40,10 @@
         <p>
             {{message}}
         </p>
-         <form action ={% url "account:user_register" %} method="post">
+         <form action ={% url "account:user_login" %} method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="ساخت حساب" />
+            <input type="submit" value="وارد شدن ب حساب کاری دانشجو" />
     </form>
     </body>
 </html>
