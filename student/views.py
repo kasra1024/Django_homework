@@ -5,6 +5,7 @@ from student.models import Student
 from student.models import Course
 
 from todo.models import task
+from django.views import View
 
 from student.forms import StudentForm , CourseStudentForm
 
@@ -102,3 +103,19 @@ def AddCourse (request) :
     return render (request , template , {"form" : form ,"courses" : all_course, "message" : "input is valid!!"}) 
 # ----------------------------------------------------------------------------------------------------------------------
 
+
+
+# تمرین ها سری اخر
+class ListCourse (View) : 
+    html = "student/ListCourse.html"
+
+    def get (self , request) : 
+        listcourse = Course.objects.all()
+        return render (request , self.html , {"listcourse" : listcourse})
+# ---------------------------------------
+class CoursePk (View) : 
+    html = "student/coursePk.html" 
+    def get (self , request) : 
+        listcourse = Course.objects.all()
+        return render (request , self.html , {"listcourse" : listcourse})
+# -----------------------------------------

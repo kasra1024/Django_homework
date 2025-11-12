@@ -1,0 +1,17 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        {% for i in listcourse %}
+       <b> {{i.title}} </b>
+       <b> {{i.teacher}}</b>
+        {% endfor %}
+        <h1>
+            students : 
+        </h1>
+        {% for student in studnet.objects.all %}
+        <li> {{ studnet.fullname }}</li>
+        {% endfor %}
+    </body>
+</html>

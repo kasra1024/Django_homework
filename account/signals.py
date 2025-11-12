@@ -8,5 +8,5 @@ def create_profile(sender , instance , created , **kwargs) :
     """this function is create profile for users"""
     if created : 
         profile.objects.create(
-            bio = f"{instance.firstname} bio" , student=instance
+            bio = f"{instance.first_name} bio" , student=instance
         )
