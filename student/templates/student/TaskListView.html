@@ -1,0 +1,14 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h2>وظایف شما</h2>
+
+<ul>
+  {% for t in tasks %}
+    <li>{{ t.title }} — {{ t.course.title }}</li>
+  {% endfor %}
+</ul>
+    </body>
+</html>

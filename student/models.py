@@ -36,7 +36,7 @@ class Course (models.Model) :
     
 class profile (models.Model) : 
     bio = models.TextField() 
-    avatar = models.ImageField(upload_to="images/%Y/%m/" , null=True)
+    avatar = models.ImageField(upload_to="images/%Y/%m/" , null=True , blank=True)
     phone_number = models.CharField(max_length=13)
     img = models.ImageField(upload_to="images/%Y/%m/" , null=True , blank=True)
     file = models.FileField(upload_to="files/%Y/%m/" , null=True , blank=True)

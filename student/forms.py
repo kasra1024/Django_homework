@@ -16,3 +16,11 @@ class CourseStudentForm (ModelForm) :
         fields = ['title' , 'code' , 'decription' , 'start_date' , 'end_date']
 
 
+
+
+class CourseForm (ModelForm) : 
+    class Meta : 
+        model = Course
+        fields = ['title' , 'code' , 'decription' , 'start_date' , 'end_date']
+
+

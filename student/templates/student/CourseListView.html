@@ -1,11 +1,15 @@
-<h1>لیست دوره‌ها</h1>
-<ul>
-  {% for c in courses %}
+<html>
+  <head>
+    <h1>courses</h1>
+  </head>
+  <body>
+    {% for i in courses %}
     <li>
-      <a href="{% url 'student:course_detail' c.pk %}">{{ c.title }}</a>
-      — مدرس: {{ c.teacher.fullname if c.teacher else "بدون مدرس" }}
+      {{i.title}}
     </li>
-  {% empty %}
-    <li>هیچ دوره‌‌ای یافت نشد.</li>
-  {% endfor %}
-</ul>
+    <li>
+      <!-- {{i.teacher.fullname}} -->
+    </li>
+    {% endfor %}
+  </body>
+</html>

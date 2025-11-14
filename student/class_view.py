@@ -1,8 +1,10 @@
 from django.views import View
 from student.models import *
-from student.forms import StudentForm
+from student.forms import *
 from django.shortcuts import render , redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from todo.models import task
 
 class AllStudentView (View) : 
     
@@ -47,5 +49,48 @@ class AllStudentView1(View) :
 class CourseListView(View) : 
     html = 'student/CourseListView.html' 
     def get (self , request) : 
-        courses = Course.objects.filter(active=True).select_related('teacher')
+        courses = Course.objects.filter(active=True).select_related('teacher')    #سرعت زیاد میکنه چون تیچر رو یک جا جوین میکنه
         return render(request ,self.html , {'courses' : courses} )
+# -----------------------------------------
+
+# تمرین ها سری اخر
+class ListCourse (View) : 
+    html = "student/ListCourse.html"
+
+    def get (self , request) : 
+        listcourse = Course.objects.all()
+        return render (request , self.html , {"listcourse" : listcourse})
+# ---------------------------------------
+class CoursePk (View) : 
+    html = "student/coursePk.html" 
+    def get (self , request) : 
+        listcourse = Course.objects.all()
+        return render (request , self.html , {"listcourse" : listcourse})
+# --------------------------------------------- 
+# (3) 
+
+# ////////////////////////////////////////////////
+# 4
+
+# class TaskListView(LoginRequiredMixin , View) :
+#     html = "student/TaskListView.html" 
+#     def get (self , request) : 
+#         user = self.request.user 
+#         if user == "student" : 
+#             return task.objects.filter(student =user.student)
+#         return task.objects.none()
+
+
+class TaskListView(LoginRequiredMixin, View):
+
+    def get(self, request):
+        try:
+            student = Student.objects.get(user=request.user)  # instance درست
+            tasks = task.objects.filter(student=student)
+        except Student.DoesNotExist:
+            tasks = task.objects.none()
+
+        context = {
+            "tasks": tasks
+        }
+        return render(request, "task/TaskListView.html", context)

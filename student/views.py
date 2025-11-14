@@ -102,20 +102,3 @@ def AddCourse (request) :
             all_course = Course.objects.all() 
     return render (request , template , {"form" : form ,"courses" : all_course, "message" : "input is valid!!"}) 
 # ----------------------------------------------------------------------------------------------------------------------
-
-
-
-# تمرین ها سری اخر
-class ListCourse (View) : 
-    html = "student/ListCourse.html"
-
-    def get (self , request) : 
-        listcourse = Course.objects.all()
-        return render (request , self.html , {"listcourse" : listcourse})
-# ---------------------------------------
-class CoursePk (View) : 
-    html = "student/coursePk.html" 
-    def get (self , request) : 
-        listcourse = Course.objects.all()
-        return render (request , self.html , {"listcourse" : listcourse})
-# -----------------------------------------
