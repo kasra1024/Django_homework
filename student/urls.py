@@ -20,9 +20,20 @@ urlpatterns = [
     # path("CourseCreateView/" , CourseCreateView.as_view()),
     path ("TaskListView/" , TaskListView.as_view()) ,
 # ------------------------------------------------------------------------------------------------------------------------------
+
     # api urls
     path ('api/all_students/' , AllStudentApiView.as_view()) , 
     path ('api/all_students/<int:pk>/' , AllStudentApiView.as_view()) ,
+    # ---------------------------------------------------------------------
+    # practice
+    path ('api/ListStudent/' , ListStudent.as_view()) ,
+    path ('api/ListStudentid/<int:pk>/' , ListStudent.as_view()) , 
+    path ('aip/AllCourseApi/' , AllCourseApi.as_view()) , 
+    path ('api/AllCourseApiid/<int:pk>/' , AllCourseApi.as_view()) , 
+    path ('api/ProfileApi/<int:pk>/' , ProfileApi.as_view()) , 
+
+
+
 
 ]
 

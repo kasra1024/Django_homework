@@ -40,10 +40,10 @@
         <p>
             {{message}}
         </p>
-         <form action ={% url "account:user_login" %} method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="وارد شدن ب حساب کاری دانشجو" />
-    </form>
+         <form action="{% url 'account:user_login' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="وارد شدن ب حساب کاری دانشجو" />
+</form>
     </body>
 </html>

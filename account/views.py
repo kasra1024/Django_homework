@@ -25,9 +25,9 @@ class RegisterView(View) :
             new_user = User.objects.create_user(
                 username=request.POST["username"] , 
                 email="" , 
-                password= request.POST["password"]
+                password= request.POST["password"])
 
-            )
+
             if new_user : 
                 return redirect ("todo:home")
         return render(request , self.template
