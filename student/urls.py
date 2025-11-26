@@ -1,7 +1,18 @@
-from django.urls import path 
+from django.urls import path , include
 from student.views import *
 from student.api import *
 from student.class_view import *
+from rest_framework.routers import DefaultRouter
+
+
+router = DefaultRouter()
+router.register(r"all-courses" , CourseViewSet , basename="all-courses")
+router.register(r"list-student" , StudentModelViewSet , basename= "list-student")              #1
+router.register(r"list-courses" , CourseModelViewSet , basename= "list-courses")               #2
+router.register(r"list-teacher" , TeacherModelViewSet , basename= "list-teacher")                #3
+
+# urlpatterns = router.urls
+
 
 app_name = "student" 
 
@@ -29,11 +40,10 @@ urlpatterns = [
     path ('api/ListStudent/' , ListStudent.as_view()) ,
     path ('api/ListStudentid/<int:pk>/' , ListStudent.as_view()) , 
     path ('aip/AllCourseApi/' , AllCourseApi.as_view()) , 
-    path ('api/AllCourseApiid/<int:pk>/' , AllCourseApi.as_view()) , 
+    path ('api/AllCourseApi/<int:pk>/' , AllCourseApi.as_view()) , 
+    path ('api/EnrollApiView/' , EnrollApiView.as_view()) ,
     path ('api/ProfileApi/<int:pk>/' , ProfileApi.as_view()) , 
-
-
-
+    path ("api/" ,include(router.urls)) , # برای viewset ها استفاده میکنیم
+    
 
 ]
-

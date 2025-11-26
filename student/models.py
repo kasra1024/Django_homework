@@ -3,12 +3,9 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Student(models.Model) : 
-    username = models.CharField(max_length=54 , null=True , blank=True)
     fullname = models.CharField(max_length=64)
-    username = models.CharField(max_length=64) 
     score = models.IntegerField(default=0)
     Profile = models.OneToOneField('profile' , related_name= 'student' , on_delete= models.CASCADE  , null=True , blank=True)
-    
     def __str__(self):
         return self.fullname 
     
@@ -25,7 +22,7 @@ class Course (models.Model) :
     decription = models.TextField()
     start_date = models.DateField()
     end_date = models.DateField()
-    students = models.ManyToManyField(Student , related_name= "Course" , blank=True) 
+    students = models.ManyToManyField(Student , related_name= "courses" , blank=True) 
     teachers = models.ForeignKey(Teacher , on_delete=models.CASCADE , blank=True , null=True, related_name='courses')
     active = models.BooleanField(default=True) 
     def __str__(self):
