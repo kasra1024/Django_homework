@@ -9,9 +9,9 @@ router = DefaultRouter()
 router.register(r"all-courses" , CourseViewSet , basename="all-courses")
 router.register(r"list-student" , StudentModelViewSet , basename= "list-student")              #1
 router.register(r"list-courses" , CourseModelViewSet , basename= "list-courses")               #2
-router.register(r"list-teacher" , TeacherModelViewSet , basename= "list-teacher")                #3
-
-# urlpatterns = router.urls
+router.register(r"list-teacher" , TeacherModelViewSet , basename= "list-teacher")              #3
+# router.register(r"list-profile" , ProfileApiSerializer , basename= "list-profile")             #5
+# urlpatterns = router.urls 
 
 
 app_name = "student" 

@@ -6,7 +6,7 @@ from student.models import profile
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
-from student.serializers import StudentSerializer , CourseSerializerzer , StudentApiSerializer , CoursesApiSerializer , TeacherApiSerializer
+from student.serializers import StudentSerializer , CourseSerializerzer , StudentApiSerializer , CoursesApiSerializer , TeacherApiSerializer , ProfileApiSerializer
 
 
 
@@ -96,19 +96,42 @@ class ProfileApi (APIView) :
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------
 # viewset
 # class CourseViewSet(ViewSet) : 
-#     def retreive (self , request , pk) : 
-#         return Response (Course.objects.filter(id = pk).title , status=status.HTTP_200_OK)
+#     def retrieve (self , request , pk) : 
+#         srz_data = CourseSerializerzer(instance = Course.objects.get(id = pk))
+#         return Response(srz_data.data)
     
+
 #     def list (self , request) : 
-#         return Response (Course.objects.values("title" , "code") , status=status.HTTP_200_OK)
+#         srz_data = CourseSerializerzer(instance = Course.objects.all() , many=True)
+#         return Response(srz_data.data)
+
 
 
 # --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# modelviewset (2)
+# modelviewset 
 class CourseViewSet(ModelViewSet) : 
     queryset = Course.objects.all() 
     serializer_class = CourseSerializerzer 
 
+    # def retrieve (self , request , pk) : 
+    #     srz_data = self.serializer_class(instance = self.queryset.get(id = pk))
+    #     data = srz_data.data 
+    #     teacher = Teacher.objects.get(id =data["teacher"] )
+    #     data["teacher"] = {"fullname" : teacher.fullname , "score" : teacher.score}
+    #     return Response(data)
+    
+    # def list (self , request) : 
+    #     srz_data = CourseSerializerzer(instance = self.queryset , many=True)
+    #     return Response(srz_data.data)
+
+
+
+    # def create (self , request) : 
+    #     srz_data = CourseSerializerzer(data = request.data)
+    #     if srz_data.is_valid() : 
+    #         srz_data.save()
+    #         return Response ("ok")
+    #     return Response ("error")
 # -----------------------------------------------------
 # (1)
 class StudentModelViewSet(ModelViewSet) : 
@@ -124,4 +147,32 @@ class CourseModelViewSet(ModelViewSet) :
 class TeacherModelViewSet(ModelViewSet) : 
     queryset = Teacher.objects.all()
     serializer_class = TeacherApiSerializer
-    
+# ------------------------------------------------------
+# (4)
+class StudentModelViewSet(ModelViewSet) : 
+    queryset = Student.objects.all()
+    serializer_class = StudentApiSerializer
+
+    def create (self,request) : 
+        srz_data = StudentApiSerializer(data = request.data)
+        if srz_data.is_valid() : 
+            srz_data.save()
+            return Response("ok" , status=status.HTTP_201_CREATED)
+        return Response ("error" , status=status.HTTP_400_BAD_REQUEST)
+#-------------------------------------------------------------------------------------
+# (4)
+class TeacherModelViewSet(ModelViewSet) : 
+    queryset = Teacher.objects.all()
+    serializer_class = TeacherApiSerializer
+
+    def create (self,request) : 
+        srz_data = TeacherApiSerializer(data = request.data)
+        if srz_data.is_valid() : 
+            srz_data.save()
+            return Response("ok" , status=status.HTTP_201_CREATED)
+        return Response ("error" , status=status.HTTP_400_BAD_REQUEST)
+# ---------------------------------------------------------------------------------------
+# (5)
+# class ProfileModelViewSet(ModelViewSet) : 
+#     queryset = profile.objects.all() 
+#     serializer_class = ProfileApiSerializer

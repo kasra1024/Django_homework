@@ -2,19 +2,40 @@ from rest_framework import serializers
 from student.models import Course , Student , Teacher , profile
 
 
-class StudentSerializer(serializers.Serializer) : 
-    fullname = serializers.CharField() 
-    score = serializers.IntegerField() 
+# class StudentSerializer(serializers.Serializer) : 
+#     fullname = serializers.CharField() 
+#     score = serializers.IntegerField() 
+class StudentSerializer(serializers.ModelSerializer): 
+    class Meta : 
+        model = Student
+        fields = ["fullname" , "score"]
 
-# (2)
+
+
+# (3) , (4)
+class TeacherApiSerializer(serializers.ModelSerializer) : 
+    class Meta : 
+        model = Teacher
+        fields = ["fullname" , "score"]
+
+
+
 class CourseSerializerzer (serializers.ModelSerializer) : 
     # students = serializers.ListField(write_only = True , required = False)
+    # students = StudentSerializer(many=True)
+    students = serializers.SerializerMethodField()
+    teachers = TeacherApiSerializer()
     class Meta : 
         model = Course
-        exclude = ["students"]
+        fields = "__all__"
+    def get_students(self , obj) : 
+        result = obj.students.values("fullname" , "score")
+        return result
 
 
-# (1) 
+
+
+# (1) , (4)
 class StudentApiSerializer(serializers.ModelSerializer) : 
     class Meta : 
         model = Student 
@@ -28,9 +49,9 @@ class CoursesApiSerializer(serializers.ModelSerializer) :
         fields = "__all__"
 
 
-
-# (3)
-class TeacherApiSerializer(serializers.ModelSerializer) : 
-    class Meta : 
-        model = Teacher
-        fields = ["fullname" , "score"]
+# (4) 
+# class ProfileApiSerializer(serializers.ModelSerializer): 
+#      class Meta: 
+#          model = profile
+#          fields = "__all__"
+    
