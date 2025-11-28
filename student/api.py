@@ -6,7 +6,7 @@ from student.models import profile
 from rest_framework.response import Response
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
-from student.serializers import StudentSerializer , CourseSerializerzer , StudentApiSerializer , CoursesApiSerializer , TeacherApiSerializer , ProfileApiSerializer
+from student.serializers import *
 
 
 
