@@ -14,9 +14,14 @@ class StudentSerializer(serializers.ModelSerializer):
 
 # (3) , (4)
 class TeacherApiSerializer(serializers.ModelSerializer) : 
+    # courses =serializers.PrimaryKeyRelatedField(many = True , read_only = True)
+    courses = serializers.SerializerMethodField()
     class Meta : 
         model = Teacher
-        fields = ["fullname" , "score"]
+        fields = ["fullname" , "score" , "courses"]
+
+    def get_courses (sefl , obj) : 
+        return obj.courses.values()
 
 
 
@@ -24,7 +29,7 @@ class CourseSerializerzer (serializers.ModelSerializer) :
     # students = serializers.ListField(write_only = True , required = False)
     # students = StudentSerializer(many=True)
     students = serializers.SerializerMethodField()
-    teachers = TeacherApiSerializer()
+    teachers = TeacherApiSerializer(read_only = True)
     class Meta : 
         model = Course
         fields = "__all__"
@@ -50,8 +55,8 @@ class CoursesApiSerializer(serializers.ModelSerializer) :
 
 
 # (4) 
-# class ProfileApiSerializer(serializers.ModelSerializer): 
-#      class Meta: 
-#          model = profile
-#          fields = "__all__"
+class ProfileApiSerializer(serializers.ModelSerializer): 
+     class Meta: 
+         model = profile
+         fields = "__all__"
     

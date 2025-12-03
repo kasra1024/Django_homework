@@ -7,16 +7,24 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
 from student.serializers import *
-
+from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated 
+from student.permissions import *
+# from rest_framework.pagination import PageNumberPagination
+from student.paginations import NewPagination 
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class AllStudentApiView(APIView) : 
-    def get (self , request) : 
-        students_id = Student.objects.all().values_list("id" , flat=True)
-        students_dict = {"id" : students_id} 
-        return Response (students_dict)
-
-
+    def get (self , request , pk) : 
+        if pk : 
+            students_id = Student.objects.get(id = pk)
+            return Response({"name" : students_id.fullname , "score" :students_id.score})
+        else : 
+            students_name = Student.objects.all().values("fullname" , flat = True)
+            student_dict = {"student" : students_name}
+            return Response (student_dict)
+    
 
 
     def post (self , request) : 
@@ -24,6 +32,7 @@ class AllStudentApiView(APIView) :
        srz_data = StudentSerializer(data = data)
        if srz_data.is_valid () : 
            Student.objects.create(fullname = data["fullname"] , score = data["score"])
+        #    srz_data.save()
            return Response ({"message" : "ok my dear"} , status=status.HTTP_201_CREATED )
        else : 
             return Response ({"message" : "validations error"} , status=status.HTTP_400_BAD_REQUEST)
@@ -112,6 +121,18 @@ class ProfileApi (APIView) :
 class CourseViewSet(ModelViewSet) : 
     queryset = Course.objects.all() 
     serializer_class = CourseSerializerzer 
+    permission_classes = None
+    pagination_class = NewPagination 
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["active" , "code"]
+
+    def get_permissions(self):
+        if self.request.method in ["POST" , "PUT" , "PATCH" , "DELETE"] : 
+            return [IsAuthenticated() , ActiveCourse(), IsTeacher()]
+        else : 
+            return [IsAuthenticated() , ActiveCourse()]
+        # return super().get_permissions()
+
 
     # def retrieve (self , request , pk) : 
     #     srz_data = self.serializer_class(instance = self.queryset.get(id = pk))
@@ -131,7 +152,14 @@ class CourseViewSet(ModelViewSet) :
     #     if srz_data.is_valid() : 
     #         srz_data.save()
     #         return Response ("ok")
-    #     return Response ("error")
+    #     return Response (srz_data.errors)
+
+
+    @action(detail=False) 
+    def is_active_list(self , request) : 
+        q = Course.objects.filter(is_active = True)
+        srz_data = self.serializer_class(instance = q , many=True)
+        return Response (srz_data.data)
 # -----------------------------------------------------
 # (1)
 class StudentModelViewSet(ModelViewSet) : 
@@ -161,18 +189,18 @@ class StudentModelViewSet(ModelViewSet) :
         return Response ("error" , status=status.HTTP_400_BAD_REQUEST)
 #-------------------------------------------------------------------------------------
 # (4)
-class TeacherModelViewSet(ModelViewSet) : 
-    queryset = Teacher.objects.all()
-    serializer_class = TeacherApiSerializer
+# class TeacherModelViewSet(ModelViewSet) : 
+#     queryset = Teacher.objects.all()
+#     serializer_class = TeacherApiSerializer
 
-    def create (self,request) : 
-        srz_data = TeacherApiSerializer(data = request.data)
-        if srz_data.is_valid() : 
-            srz_data.save()
-            return Response("ok" , status=status.HTTP_201_CREATED)
-        return Response ("error" , status=status.HTTP_400_BAD_REQUEST)
+    # def create (self,request) : 
+    #     srz_data = TeacherApiSerializer(data = request.data)
+    #     if srz_data.is_valid() : 
+    #         srz_data.save()
+    #         return Response("ok" , status=status.HTTP_201_CREATED)
+    #     return Response ("error" , status=status.HTTP_400_BAD_REQUEST)
 # ---------------------------------------------------------------------------------------
 # (5)
-# class ProfileModelViewSet(ModelViewSet) : 
-#     queryset = profile.objects.all() 
-#     serializer_class = ProfileApiSerializer
+class ProfileModelViewSet(ModelViewSet) : 
+    queryset = profile.objects.all() 
+    serializer_class = ProfileApiSerializer
