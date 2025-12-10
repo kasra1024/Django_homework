@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,9 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'django_filters',
+    'django_crontab',
+    'rest_framework_simplejwt',
+    'drf_yasg',
     'todo',
     'student',
     'account',
+    'finance',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'student.middleware.CustomMiddleware',
 ]
 
 ROOT_URLCONF = 'myapp.urls'
@@ -84,13 +90,40 @@ DATABASES = {
     }
 }
 
+
+# DATABASES ={
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'djangodb',
+#         'USER': 'admin',
+#         'PASSWORD': 'admin',
+#         'HOST': 'localhost',
+#         'PORT': '5432'
+#     }
+# }
+
+
+
+
+
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ] , 
+    #  'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
+    # ),
      'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 1
 }
+
+
+SIMPLE_JWT = { 
+       'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),  
+       'REFRESH_TOKEN_LIFETIME': timedelta(days=7)
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -144,3 +177,7 @@ MEDIA_URL = "/media/"
 LOGIN_URL = "account/user_login/"
 
 # AUTH_USER = "account.models.User"
+
+CRONJOBS = [
+    ('*/5 * * * *', 'django.core.management.call_command', ['test1'])
+]

@@ -13,8 +13,8 @@ from student.permissions import *
 # from rest_framework.pagination import PageNumberPagination
 from student.paginations import NewPagination 
 from django_filters.rest_framework import DjangoFilterBackend
-
-
+from student.filters import CourseFilter
+from django.core.management import call_command
 class AllStudentApiView(APIView) : 
     def get (self , request , pk) : 
         if pk : 
@@ -121,10 +121,12 @@ class ProfileApi (APIView) :
 class CourseViewSet(ModelViewSet) : 
     queryset = Course.objects.all() 
     serializer_class = CourseSerializerzer 
-    permission_classes = None
+    # permission_classes = [IsAuthenticated]
     pagination_class = NewPagination 
+    # authentication_classes = []    #خودمون دستیم میایم میزاریم ک این کورس نیازی نداره به اینکه یوزر لاگین کرده باشه 
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ["active" , "code"]
+    # filterset_fields = ["active" , "code"]
+    filterset_class = CourseFilter
 
     def get_permissions(self):
         if self.request.method in ["POST" , "PUT" , "PATCH" , "DELETE"] : 
@@ -141,9 +143,10 @@ class CourseViewSet(ModelViewSet) :
     #     data["teacher"] = {"fullname" : teacher.fullname , "score" : teacher.score}
     #     return Response(data)
     
-    # def list (self , request) : 
-    #     srz_data = CourseSerializerzer(instance = self.queryset , many=True)
-    #     return Response(srz_data.data)
+    def list (self , request) : 
+        srz_data = CourseSerializerzer(instance = self.queryset , many=True)
+        call_command("test1" , 12)
+        return Response(srz_data.data)
 
 
 
