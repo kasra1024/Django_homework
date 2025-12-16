@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'todo',
     'student',
     'account',
-    'finance',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'student.middleware.CustomMiddleware',
+    # 'student.middleware.CustomMiddleware',
 ]
 
 ROOT_URLCONF = 'myapp.urls'
@@ -111,18 +110,30 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ] , 
+
     #  'DEFAULT_AUTHENTICATION_CLASSES': (
     #     'rest_framework_simplejwt.authentication.JWTAuthentication',
     # ),
-     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 1
+
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 1,
+    
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle'
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',
+        'user': '1000/day'
+    }
+    
 }
 
-
-SIMPLE_JWT = { 
-       'ACCESS_TOKEN_LIFETIME': timedelta(hours=1),  
-       'REFRESH_TOKEN_LIFETIME': timedelta(days=7)
-    }
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+}
+    
 
 
 # Password validation

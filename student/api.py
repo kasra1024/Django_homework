@@ -121,7 +121,7 @@ class ProfileApi (APIView) :
 class CourseViewSet(ModelViewSet) : 
     queryset = Course.objects.all() 
     serializer_class = CourseSerializerzer 
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated , ModifyCourse]
     pagination_class = NewPagination 
     # authentication_classes = []    #خودمون دستیم میایم میزاریم ک این کورس نیازی نداره به اینکه یوزر لاگین کرده باشه 
     filter_backends = [DjangoFilterBackend]
@@ -143,10 +143,10 @@ class CourseViewSet(ModelViewSet) :
     #     data["teacher"] = {"fullname" : teacher.fullname , "score" : teacher.score}
     #     return Response(data)
     
-    def list (self , request) : 
-        srz_data = CourseSerializerzer(instance = self.queryset , many=True)
-        call_command("test1" , 12)
-        return Response(srz_data.data)
+    # def list (self , request) : 
+    #     srz_data = CourseSerializerzer(instance = self.queryset , many=True)
+    #     call_command("test1" , 12)
+    #     return Response(srz_data.data)
 
 
 
@@ -184,12 +184,12 @@ class StudentModelViewSet(ModelViewSet) :
     queryset = Student.objects.all()
     serializer_class = StudentApiSerializer
 
-    def create (self,request) : 
-        srz_data = StudentApiSerializer(data = request.data)
-        if srz_data.is_valid() : 
-            srz_data.save()
-            return Response("ok" , status=status.HTTP_201_CREATED)
-        return Response ("error" , status=status.HTTP_400_BAD_REQUEST)
+    # def create (self,request) : 
+    #     srz_data = StudentApiSerializer(data = request.data)
+    #     if srz_data.is_valid() : 
+    #         srz_data.save()
+    #         return Response("ok" , status=status.HTTP_201_CREATED)
+    #     return Response ("error" , status=status.HTTP_400_BAD_REQUEST)
 #-------------------------------------------------------------------------------------
 # (4)
 # class TeacherModelViewSet(ModelViewSet) : 

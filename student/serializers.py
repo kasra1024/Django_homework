@@ -22,8 +22,7 @@ class TeacherApiSerializer(serializers.ModelSerializer) :
 
     def get_courses (sefl , obj) : 
         return obj.courses.values()
-
-
+ 
 
 class CourseSerializerzer (serializers.ModelSerializer) : 
     # students = serializers.ListField(write_only = True , required = False)
@@ -36,6 +35,17 @@ class CourseSerializerzer (serializers.ModelSerializer) :
     def get_students(self , obj) : 
         result = obj.students.values("fullname" , "score")
         return result
+    
+
+    def create(self, validated_data):
+        validated_data["title"] = validated_data["title"] + "1404"
+        return super().create(validated_data)
+    
+       
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)
+
+
 
 
 
@@ -45,6 +55,9 @@ class StudentApiSerializer(serializers.ModelSerializer) :
     class Meta : 
         model = Student 
         fields = ["fullname" , "score"]
+
+    def create(self, validated_data):
+        return super().create(validated_data)
 
 
 # (2) 

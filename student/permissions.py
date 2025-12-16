@@ -17,3 +17,10 @@ class ActiveCourse(BasePermission) :
     message = "اجازه ندارد" 
     def has_object_permission(self, request, view, obj):
         return obj.active
+
+
+
+class ModifyCourse(BasePermission) : 
+    message = "اجازه ندارد" 
+    def has_object_permission(self, request, view, obj):
+        return obj.teacher.Profile.user.id == request.user.id
