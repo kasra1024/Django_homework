@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+# from dotenv import load_dotenv
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -93,8 +95,8 @@ DATABASES = {
 # DATABASES ={
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'djangodb',
-#         'USER': 'admin',
+#         'NAME': 'load_dotenv("DBNAME")',
+#         'USER': 'load_dotenv("DBUSER")',
 #         'PASSWORD': 'admin',
 #         'HOST': 'localhost',
 #         'PORT': '5432'
@@ -182,12 +184,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 MEDIA_ROOT = f"{BASE_DIR}/media/"
-
 MEDIA_URL = "/media/"
-
 LOGIN_URL = "account/user_login/"
 
+
+
+
 # AUTH_USER = "account.models.User"
+AUTH_USER_MODEL = "account.User"
+
 
 CRONJOBS = [
     ('*/5 * * * *', 'django.core.management.call_command', ['test1'])

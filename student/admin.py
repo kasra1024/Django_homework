@@ -4,7 +4,12 @@ from django.contrib import admin
 
 from student.models import Student , Course , profile , Teacher
 
+class CourseAdmin (admin.ModelAdmin) : 
+    list_display = ("title" , "code")
+
+
+
 admin.site.register(Student) 
-admin.site.register(Course) 
+admin.site.register(Course , CourseAdmin) 
 admin.site.register(profile)
 admin.site.register(Teacher)
